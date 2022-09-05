@@ -57,7 +57,7 @@ public class PdfToXmls {
 
             System.out.println(extractDataPoint(0,"905[0-9]{6}", null).get());
             System.out.println(extractDataPoint(0,"C3[0-9]{5}", null).get());
-            System.out.println(extractDataPoint(0,"PO. No.+[0-9]", "[0-9]+?").get());
+            System.out.println(extractDataPoint(0,"PO. No.+[0-9]", "[0-9_]+").get());
 
 
             } catch (IOException ex){
@@ -72,18 +72,20 @@ public class PdfToXmls {
             Pattern detectPattern = Pattern.compile(regexDetect);
             String pageStr =pdfExtracted.get(page);
             Matcher detectMatcher = detectPattern.matcher(pageStr);
+            String resultStr = new String();
             while(detectMatcher.find()){
-                String resultStr = pageStr.substring(detectMatcher.start(),detectMatcher.end());
-                if(regexExtract != null){
-                    Pattern extractPattern = Pattern.compile(regexExtract);
-                    Matcher extractMatcher = extractPattern.matcher(resultStr);
-                    while(extractMatcher.find()){
-                        resultStr = resultStr.substring(extractMatcher.start(),extractMatcher.end());
-                    }
-                }
-                result = Optional.of(resultStr);
-                }
+                resultStr = pageStr.substring(detectMatcher.start(),detectMatcher.end());
             }
+            if (regexExtract == null){
+                return Optional.of(resultStr);}
+            Pattern extractPattern = Pattern.compile(regexExtract);
+            Matcher extractMatcher = extractPattern.matcher(resultStr);
+            String resultExtract = new String();
+            while(extractMatcher.find()){
+                resultExtract = resultStr.substring(extractMatcher.start(),extractMatcher.end());
+            }
+            return Optional.of(resultExtract);
+        }
         return result;
     }
 }
