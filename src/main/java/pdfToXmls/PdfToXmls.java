@@ -1,7 +1,10 @@
 package pdfToXmls;
 
 
+import entity.Cells2Modify;
+import entity.TravelDetails;
 import util.SimplePDFReader;
+import util.XLSModifier;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,15 +20,24 @@ import java.util.regex.Pattern;
  */
 public class PdfToXmls {
 
-    private HashMap travelDetails= new HashMap();
+    private TravelDetails travelDetails = new TravelDetails();
     private ArrayList<String> pdfExtracted; //Each element => one page
     private HashMap<Integer, String[]> pdfPages = new HashMap<>(); // page => Array of strings
 
+    private final static String regexOrderNumberDetect = "905[0-9]{6}";
+    private final static String regexOrderNumberExtract = null;
+
+    private final static String regexFunctionalLocationNumberDetect = "C3[0-9]{5}";
+    private final static String regexFunctionalLocationNumberExtract = null;
+
+    private final static String regexPONumDetect = "PO. No.+[0-9]";
+    private final static String regexPONumExtract = "[0-9_]+";
+
+    private HashMap<String, String > cellsData = new HashMap<>();
+
+
     public PdfToXmls(){
-       travelDetails.put("Order", null);
-       travelDetails.put("FuncLocation", null);
-       travelDetails.put("Equipment", null);
-       travelDetails.put("PO. No.", null);
+
    }
 
     public void proceedPdfToXmls(String pathPdfFile,
@@ -38,31 +50,58 @@ public class PdfToXmls {
              pdfExtracted = SimplePDFReader.extractSimpleText(pathPdfFile);
 
             //put data to HashMap. Page => String[] of all lines
-            if(pdfExtracted!=null) {
+           /* if(pdfExtracted!=null) {
              for(int pages = 0; pages < pdfExtracted.size(); ++pages ){
                  pdfPages.put((pages + 1), pdfExtracted.get(pages).split("/n"));
              }
-            }
+            }*/
 
             //DEBUG output
-            pdfPages.forEach((page, lines)->{
-                for(int line = 0; line < lines.length; ++line )
-                {
-                    System.out.println(lines[line]);
-                }
-            });
+            {
+                pdfPages.forEach((page, lines)->{
+                    for(int line = 0; line < lines.length; ++line )
+                    {
+                        System.out.println(lines[line]);
+                    }
+                });
 
-            //Test Regex
-            System.out.println("Testing regex...");
+                //Test Regex
+                System.out.println("Testing regex...");
 
-            System.out.println(extractDataPoint(0,"905[0-9]{6}", null).get());
-            System.out.println(extractDataPoint(0,"C3[0-9]{5}", null).get());
-            System.out.println(extractDataPoint(0,"PO. No.+[0-9]", "[0-9_]+").get());
+                System.out.println(extractDataPoint(0,"905[0-9]{6}", null).get());
+                System.out.println(extractDataPoint(0,"C3[0-9]{5}", null).get());
+                System.out.println(extractDataPoint(0,"PO. No.+[0-9]", "[0-9_]+").get());
+            }
+
+
+           //Fill TravelDetails POJO class
+            extractAllDataPoints();
+
+            //Modify XMLS file
+
+            cellsData.put(Cells2Modify.OrderNumber, travelDetails.getOrder());
+            cellsData.put(Cells2Modify.LocationNo, travelDetails.getFuncLocation());
+            cellsData.put(Cells2Modify.PONum, travelDetails.getPO_No());
+
+            XLSModifier.modifyXLS("D:\\Dev\\Java\\Projects\\TravelDocumentProceeder\\src\\main\\resources\\time_report.xlsx",
+                                     "D:\\Dev\\Java\\Projects\\TravelDocumentProceeder\\src\\main\\resources\\time_report_MOD.xlsx",
+                                   cellsData);
 
 
             } catch (IOException ex){
             ex.printStackTrace();
         }
+
+    }
+
+
+    private void extractAllDataPoints(){
+        travelDetails.setFuncLocation(extractDataPoint(0, regexFunctionalLocationNumberDetect,
+                                                               regexFunctionalLocationNumberExtract).get());
+        travelDetails.setOrder(extractDataPoint(0,regexOrderNumberDetect,
+                                                        regexOrderNumberExtract).get());
+        travelDetails.setPO_No(extractDataPoint(0,regexPONumDetect,
+                                                        regexPONumExtract).get());
 
     }
 

@@ -14,7 +14,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         PdfToXmls pdfToXmls = new PdfToXmls();
 
-        pdfToXmls.proceedPdfToXmls("C:\\Dev\\Java\\Projects\\TravelDocumentProceeder\\src\\main\\resources\\travel-test.pdf",
+        pdfToXmls.proceedPdfToXmls("D:\\Dev\\Java\\Projects\\TravelDocumentProceeder\\src\\main\\resources\\travel-test.pdf",
                  null, null);
 
 
