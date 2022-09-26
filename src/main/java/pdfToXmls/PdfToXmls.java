@@ -8,7 +8,6 @@ import util.XLSModifier;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Optional;
 import java.util.regex.Matcher;
@@ -24,14 +23,14 @@ public class PdfToXmls {
     private ArrayList<String> pdfExtracted; //Each element => one page
     private HashMap<Integer, String[]> pdfPages = new HashMap<>(); // page => Array of strings
 
-    private final static String regexOrderNumberDetect = "905[0-9]{6}";
-    private final static String regexOrderNumberExtract = null;
+    private final static String REGEX_ORDER_NUMBER_DETECT = "905[0-9]{6}";
+    private final static String REGEX_ORDER_NUMBER_EXTRACT = null;
 
-    private final static String regexFunctionalLocationNumberDetect = "C3[0-9]{5}";
-    private final static String regexFunctionalLocationNumberExtract = null;
+    private final static String REGEX_FUNCTIONAL_LOCATION_NUMBER_DETECT = "C3[0-9]{5}";
+    private final static String REGEX_FUNCTIONAL_LOCATION_NUMBER_EXTRACT = null;
 
-    private final static String regexPONumDetect = "PO. No.+[0-9]";
-    private final static String regexPONumExtract = "[0-9_]+";
+    private final static String REGEX_PO_NUM_DETECT = "PO. No.+[0-9]";
+    private final static String REGEX_PO_NUM_EXTRACT = "[0-9_]+";
 
     private HashMap<String, String > cellsData = new HashMap<>();
 
@@ -96,12 +95,12 @@ public class PdfToXmls {
 
 
     private void extractAllDataPoints(){
-        travelDetails.setFuncLocation(extractDataPoint(0, regexFunctionalLocationNumberDetect,
-                                                               regexFunctionalLocationNumberExtract).get());
-        travelDetails.setOrder(extractDataPoint(0,regexOrderNumberDetect,
-                                                        regexOrderNumberExtract).get());
-        travelDetails.setPO_No(extractDataPoint(0,regexPONumDetect,
-                                                        regexPONumExtract).get());
+        travelDetails.setFuncLocation(extractDataPoint(0, REGEX_FUNCTIONAL_LOCATION_NUMBER_DETECT,
+                REGEX_FUNCTIONAL_LOCATION_NUMBER_EXTRACT).get());
+        travelDetails.setOrder(extractDataPoint(0, REGEX_ORDER_NUMBER_DETECT,
+                REGEX_ORDER_NUMBER_EXTRACT).get());
+        travelDetails.setPO_No(extractDataPoint(0, REGEX_PO_NUM_DETECT,
+                REGEX_PO_NUM_EXTRACT).get());
 
     }
 

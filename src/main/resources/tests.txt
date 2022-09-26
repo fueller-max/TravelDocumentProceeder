@@ -1,21 +1,7 @@
-package main;
+//PdfToXmls pdfToXmls = new PdfToXmls();
 
-
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import pdfToXmls.PdfToXmls;
-import util.*;
-
-
-public class Main {
-    public static void main(String[] args) throws IOException {
-        PdfToXmls pdfToXmls = new PdfToXmls();
-
-        pdfToXmls.proceedPdfToXmls("D:\\Dev\\Java\\Projects\\TravelDocumentProceeder\\src\\main\\resources\\travel-test.pdf",
-                 null, null);
+       // pdfToXmls.proceedPdfToXmls("D:\\Dev\\Java\\Projects\\TravelDocumentProceeder\\src\\main\\resources\\travel-test.pdf",
+       //           null, null);
 
 
 
@@ -29,6 +15,3 @@ public class Main {
                 "C:\\Dev\\Java\\Projects\\TravelDocumentProceeder\\src" +
                         "\\main\\resources\\Time Report_Ovchinnikov_Saransk_Mechta_CW35_MOD.xlsx",
                 cellsToModify);*/
-    }
-    }
-

@@ -18,26 +18,23 @@ import java.util.Map;
 public class XLSModifier {
 
 
-    public static void modifyXLS(String filePathFrom, String filePathTo, Map<String,String> cells2Modify) throws IOException {
-
-        XSSFWorkbook XMLSBook;  // Declare XMLS book from apache poi
+    public static void modifyXLS(String fileReadPath, String fileWritePath, Map<String,String> cells2Modify) throws IOException {
+        // Declare XMLS book from apache poi
+        XSSFWorkbook XMLSBook;
 
         //Read xmls file
-        try(FileInputStream ExcelFile = new FileInputStream(filePathFrom) ){
+        try(FileInputStream ExcelFile = new FileInputStream(fileReadPath) ){
 
             XMLSBook = new XSSFWorkbook(ExcelFile); // Load file to RAM as DOM object
-
 
             //Extract common info
             System.out.println("The book name is: " + XMLSBook.getSheetName(0) + "\n" +
                                "The number of sheets is: " + XMLSBook.getNumberOfSheets());
 
+            //Extracting all the sheets names
             ArrayList<String> sheetsName = new ArrayList<>();
-            //Extracting all sheets name
             for(int sheet = 0; sheet < XMLSBook.getNumberOfSheets(); ++sheet){
                 String sheetName = XMLSBook.getSheetName(sheet);
-                System.out.println("The sheet number " + sheet + " has the name " +
-                                   sheetName);
                 sheetsName.add(sheetName);
             }
 
@@ -54,14 +51,15 @@ public class XLSModifier {
                                 System.err.println("Cannot access the cell specified");
                             }
                         }
+
                 );
             }
         }
 
-        //Write data to another file
-        try(FileOutputStream fileWr = new FileOutputStream(filePathTo)){
+        //Write the data to output file
+        try(FileOutputStream fileOutput = new FileOutputStream(fileWritePath)){
             if(XMLSBook != null){
-                XMLSBook.write(fileWr);
+                XMLSBook.write(fileOutput);
             }
         }
         XMLSBook.close();
