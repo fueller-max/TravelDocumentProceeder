@@ -6,6 +6,7 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
+import util.Logger;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,6 +18,7 @@ import java.util.stream.Stream;
 public class FileStorageService implements StorageService{
 
     private final Path rootLocation;
+    private Logger logger = new Logger();
 
     @Autowired
     public FileStorageService(StorageProperties storageProperties){
@@ -82,6 +84,7 @@ public class FileStorageService implements StorageService{
              return resource;
          }else
          {
+             logger.writeToConsole("Exception \"StorageFileNotFoundException\" has been triggered");
              throw new StorageFileNotFoundException("Could not read the file: " + filename);
          }
         }

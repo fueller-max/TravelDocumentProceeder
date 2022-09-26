@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.mockito.BDDMockito;
+import org.mockito.Mock;
 import org.springframework.core.io.Resource;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -49,7 +50,7 @@ public class FileUploadTests {
     private WebApplicationContext webApplicationContext;
     private MockMvc mvc;
 
-    //@MockBean
+    //@Mock
     @Autowired
     private StorageService storageService;
 
@@ -61,10 +62,14 @@ public class FileUploadTests {
     @Test
     public void shouldListAllFiles() throws Exception {
 
-       // given(this.storageService.loadAll())
-       //         .willReturn(Stream.of(Paths.get("first.txt"), Paths.get("second.txt")));
+        MockMultipartFile multipartFile = new MockMultipartFile("file", "first.txt",
+                "text/plain", "Spring Framework".getBytes());
+        mvc.perform(multipart("/").file(multipartFile));
 
-      //  mvc.perform(post());
+        multipartFile = new MockMultipartFile("file", "second.txt",
+                "text/plain", "Spring Framework".getBytes());
+        mvc.perform(multipart("/").file(multipartFile));
+
 
         mvc.perform(get("/")).andExpect(status().isOk())
                 .andExpect(model().attribute("files",
@@ -94,6 +99,5 @@ public class FileUploadTests {
 
         this.mvc.perform(get("/files/test.txt")).andExpect(status().isNotFound());
     }
-
 
 }
