@@ -3,38 +3,53 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>TITLE</title>
+    <title>TravelDocu</title>
     <link rel="stylesheet" href="css/styles.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="js/uploadForm.js"></script>
+    <script th:inline="javascript"> var filename = [[${message}]]; </script>
 
 </head>
 
 <body>
 
+<!--
 <div th:if="${message}">
     <h2 th:text="${message}"/>
 </div>
+-->
 
     <form class = "main-upload-form" method="POST" enctype="multipart/form-data" action="/">
         <p class = "main-upload-form-title"> Панель загрузки и обработки файла задания </p>
 
         <div class ="input_wrapper">
-
         <input name="file" type="file" accept =".pdf" id="input_file" class="input input_file" multiple>
         <label for="input_file" class="input_file-button">
             <span class="input_file-icon-wrapper">
-                <img class="input_file-icon"   src="/static/images/add.svg"
-                                                       th:src="@{/static/images/add.jpg}" width="25">
+                <img class="input_file-icon"   src="/static/images/add.svg"  th:src="@{/static/images/add.jpg}" width="25">
             </span>
             <span class="input_file-button-text">Выберите файл</span>
         </label>
-
-            <input name ="submit_file" type="submit" id ="submit_file" value="Загрузить файл" />
         </div>
+
+        <div class ="submit_wrapper">
+            <div class="submit_file_wrapper">
+                <input name ="submit_file" type="submit" id ="submit_file" class = "submit_submit_file" >
+                    <label for ="submit_file" class="submit_file-button">
+                        <span class="submit_file-button-text">Загрузить файл</span>
+                    </label>
+            </div>
+        </div>
+
+
+        <div class="proceed_button_wrapper">
+            <button type="button" class="doc_proceed_btn">Обработать файл</button>
+        </div>
+
+
     </form>
 
-
+<!--
 <div>
     <ul>
         <li th:each="file : ${files}">
@@ -42,6 +57,6 @@
         </li>
     </ul>
 </div>
-
+-->
 </body>
 </html>

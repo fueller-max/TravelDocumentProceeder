@@ -47,7 +47,6 @@ public class FileStorageService implements StorageService{
 
             if(!destinationFile.getParent().equals(this.rootLocation.toAbsolutePath())){
                 throw new StorageException("Cannot store the file outside current directory");
-
             }
 
             try(InputStream inputStream = file.getInputStream()){
