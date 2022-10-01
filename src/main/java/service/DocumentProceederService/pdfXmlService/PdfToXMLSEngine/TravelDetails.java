@@ -1,4 +1,4 @@
-package entity;
+package service.DocumentProceederService.pdfXmlService.PdfToXMLSEngine;
 
 public class TravelDetails {
     private String order;

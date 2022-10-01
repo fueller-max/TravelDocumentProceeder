@@ -1,4 +1,4 @@
-package entity;
+package service.DocumentProceederService.pdfXmlService.PdfToXMLSEngine;
 
 public class Cells2Modify {
    public static final String OrderNumber = "AR18";

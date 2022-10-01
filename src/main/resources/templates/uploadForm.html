@@ -12,21 +12,14 @@
 </head>
 
 <body>
-
-<!--
-<div th:if="${message}">
-    <h2 th:text="${message}"/>
-</div>
--->
-
     <form class = "main-upload-form" method="POST" enctype="multipart/form-data" action="/">
         <p class = "main-upload-form-title"> Панель загрузки и обработки файла задания </p>
 
         <div class ="input_wrapper">
-        <input name="file" type="file" accept =".pdf" id="input_file" class="input input_file" multiple>
+        <input name="file" type="file"  id="input_file" class="input input_file" multiple>
         <label for="input_file" class="input_file-button">
             <span class="input_file-icon-wrapper">
-                <img class="input_file-icon"   src="/static/images/add.svg"  th:src="@{/static/images/add.jpg}" width="25">
+                <img class="input_file-icon"   src="/images/add.png"  th:src="@{/images/add.png}" width="25">
             </span>
             <span class="input_file-button-text">Выберите файл</span>
         </label>
@@ -41,22 +34,10 @@
             </div>
         </div>
 
-
-        <div class="proceed_button_wrapper">
-            <button type="button" class="doc_proceed_btn">Обработать файл</button>
+        <div class="proceed_button_wrapper" >
+            <span class="doc_proceed-text">Обработать файл</span>
         </div>
-
-
     </form>
 
-<!--
-<div>
-    <ul>
-        <li th:each="file : ${files}">
-            <a th:href="${file}" th:text="${file}" />
-        </li>
-    </ul>
-</div>
--->
 </body>
 </html>

@@ -1,8 +1,6 @@
-package pdfToXmls;
+package service.DocumentProceederService.pdfXmlService.PdfToXMLSEngine;
 
 
-import entity.Cells2Modify;
-import entity.TravelDetails;
 import util.SimplePDFReader;
 import util.XLSModifier;
 
@@ -37,23 +35,17 @@ public class PdfToXmls {
 
     public PdfToXmls(){
 
-   }
+    }
 
-    public void proceedPdfToXmls(String pathPdfFile,
+    public String proceedPdfToXmls(String pathPdfFile,
                                         String pathXmlsSrc,
                                         String pathXmlsDst)
     {
 
+       String fileProceeded = null;
         try {
             //First read data from pdf file into ArrayList.
              pdfExtracted = SimplePDFReader.extractSimpleText(pathPdfFile);
-
-            //put data to HashMap. Page => String[] of all lines
-           /* if(pdfExtracted!=null) {
-             for(int pages = 0; pages < pdfExtracted.size(); ++pages ){
-                 pdfPages.put((pages + 1), pdfExtracted.get(pages).split("/n"));
-             }
-            }*/
 
             //DEBUG output
             {
@@ -82,15 +74,15 @@ public class PdfToXmls {
             cellsData.put(Cells2Modify.LocationNo, travelDetails.getFuncLocation());
             cellsData.put(Cells2Modify.PONum, travelDetails.getPO_No());
 
-            XLSModifier.modifyXLS("D:\\Dev\\Java\\Projects\\TravelDocumentProceeder\\src\\main\\resources\\time_report.xlsx",
-                                     "D:\\Dev\\Java\\Projects\\TravelDocumentProceeder\\src\\main\\resources\\time_report_MOD.xlsx",
-                                   cellsData);
+            XLSModifier.modifyXLS(pathXmlsSrc, pathXmlsDst, cellsData);
+
+            fileProceeded = pathXmlsDst;
 
 
             } catch (IOException ex){
             ex.printStackTrace();
         }
-
+     return fileProceeded;
     }
 
 
