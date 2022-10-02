@@ -5,12 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import service.DocumentProceederService.pdfXmlService.PdfToXMLSEngine.PdfToXmls;
-import service.DocumentProceederService.DocumentProceederService;
+import service.DocumentProceederService.DocumentProceedService;
 import service.DocumentProceederService.pdfXmlService.config.pdfToXMLSConfig;
 import service.storageService.StorageService;
 
 @Service
-public class pdfToXMLService implements DocumentProceederService {
+public class pdfToXMLService implements DocumentProceedService {
 
     private final String basicXMLS;//
     private final String modXMLS; //

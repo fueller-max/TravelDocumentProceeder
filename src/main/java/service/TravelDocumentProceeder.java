@@ -13,8 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
-import service.DocumentProceederService.DocumentProceederService;
-import service.DocumentProceederService.pdfXmlService.pdfToXMLService;
+import service.DocumentProceederService.DocumentProceedService;
 import service.storageService.StorageException;
 import service.storageService.StorageFileNotFoundException;
 import service.storageService.StorageService;
@@ -27,13 +26,13 @@ import java.io.IOException;
 public class TravelDocumentProceeder {
 
     private final StorageService storageService;
-    private final DocumentProceederService documentProceederService;
+    private final DocumentProceedService documentProceedService;
 
     @Autowired
     public TravelDocumentProceeder(StorageService storageService,
-                                   DocumentProceederService documentProceederService ) {
+                                   DocumentProceedService documentProceedService ) {
         this.storageService = storageService;
-        this.documentProceederService = documentProceederService;
+        this.documentProceedService = documentProceedService;
     }
 
     @GetMapping("/")
@@ -44,13 +43,12 @@ public class TravelDocumentProceeder {
     @GetMapping("/files/{fileName:.+}")
     @ResponseBody
     public ResponseEntity<Resource> serveFile(@PathVariable String fileName) throws IOException {
-        System.out.println("Proceed getter has been triggered!");
 
         // Upload the file to the directory
         Resource fileUploaded = storageService.loadAsResource(fileName);
 
         //Process the data and return path to the file generated
-        Resource fileModified = documentProceederService.proceed(fileUploaded.getURL().getFile());
+        Resource fileModified = documentProceedService.proceed(fileUploaded.getURL().getFile());
 
         //Return the generated file
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_OCTET_STREAM).header(HttpHeaders.CONTENT_DISPOSITION,

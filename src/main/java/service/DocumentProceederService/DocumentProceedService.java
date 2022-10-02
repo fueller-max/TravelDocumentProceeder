@@ -2,7 +2,7 @@ package service.DocumentProceederService;
 
 import org.springframework.core.io.Resource;
 
-public interface DocumentProceederService {
+public interface DocumentProceedService {
 
      public Resource proceed(String taskFile);
 }
